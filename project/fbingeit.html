@@ -1,0 +1,323 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Bingit+ Movie Streaming</title>
+    <style>
+        body {
+            margin: 0;
+            font-family: Arial, sans-serif;
+            background-color: #111;
+            color: #fff;
+        }
+
+        /* Header */
+        .header {
+            background-color: #222;
+            padding: 10px 20px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+
+        .header h1 {
+            color: #e50914;
+            font-size: 24px;
+            margin: 0;
+        }
+
+        .header-buttons {
+            display: flex;
+            gap: 15px;
+        }
+
+        .header-buttons button {
+            background-color: #333;
+            border: none;
+            padding: 8px 15px;
+            color: #fff;
+            font-size: 14px;
+            cursor: pointer;
+            border-radius: 5px;
+        }
+
+        .header-buttons button:hover {
+            background-color: #e50914;
+        }
+
+        .search {
+            display: flex;
+            align-items: center;
+        }
+
+        .search input {
+            background-color: #333;
+            border: none;
+            padding: 8px;
+            color: #fff;
+            border-radius: 4px;
+        }
+
+        .search input:focus {
+            outline: none;
+        }
+
+        /* Movie Section */
+        .movie-section {
+            margin: 20px;
+        }
+
+        .movie-section h2 {
+            font-size: 20px;
+            margin-bottom: 10px;
+        }
+
+        .movie-slider-container {
+            position: relative;
+            overflow: hidden;
+            width: 100%;
+        }
+
+        .movie-slider {
+            display: flex;
+            transition: transform 0.5s ease-in-out;
+            gap: 15px;
+        }
+
+        .movie-card {
+            flex: 0 0 auto;
+            width: 300px; /* Twice as big as before */
+            background-color: #222;
+            border-radius: 8px;
+            overflow: hidden;
+            cursor: pointer;
+            text-align: center;
+        }
+
+        .movie-card img {
+            width: 100%;
+            height: 400px; /* Adjusted for larger cards */
+            object-fit: cover;
+        }
+
+        .movie-card h3 {
+            font-size: 16px;
+            margin: 5px 0;
+        }
+
+        /* Slider Arrows */
+        .slider-arrow {
+            position: absolute;
+            top: 50%;
+            transform: translateY(-50%);
+            background-color: rgba(0, 0, 0, 0.5);
+            color: #fff;
+            border: none;
+            padding: 10px;
+            font-size: 20px;
+            cursor: pointer;
+            z-index: 10;
+        }
+
+        .slider-arrow.left {
+            left: 10px;
+        }
+
+        .slider-arrow.right {
+            right: 10px;
+        }
+
+        .slider-arrow:disabled {
+            opacity: 0.3;
+            cursor: not-allowed;
+        }
+
+        /* Popup */
+        .popup {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.8);
+            align-items: center;
+            justify-content: center;
+        }
+
+        .popup-content {
+            background-color: #222;
+            border-radius: 8px;
+            padding: 20px;
+            width: 80%;
+            max-width: 500px;
+            text-align: center;
+        }
+
+        .popup img {
+            width: 100%;
+            border-radius: 8px;
+        }
+
+        .popup h2 {
+            margin: 15px 0;
+        }
+
+        .popup p {
+            font-size: 14px;
+            margin: 10px 0;
+        }
+
+        .watch-now {
+            background-color: #e50914;
+            color: #fff;
+            border: none;
+            padding: 10px 20px;
+            font-size: 16px;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+
+        .close-btn {
+            position: absolute;
+            top: 10px;
+            right: 10px;
+            background: none;
+            border: none;
+            font-size: 20px;
+            color: #fff;
+            cursor: pointer;
+        }
+
+        .section-header {
+            font-size: 18px;
+            margin-top: 30px;
+        }
+    </style>
+</head>
+<body>
+    <div class="header">
+        <h1>Bingit+</h1>
+        <div class="header-buttons">
+            <button onclick="location.href='/'">Home</button>
+            <button onclick="location.href='/signin'">Sign In</button>
+            <button onclick="location.href='/about'">About</button>
+        </div>
+        <div class="search">
+            <input type="text" placeholder="Search movies or series...">
+        </div>
+    </div>
+
+    <!-- Trending Now Section -->
+    <div class="movie-section">
+        <h2 class="section-header">Trending Now</h2>
+        <div class="movie-slider-container">
+            <button class="slider-arrow left" id="left-arrow-trending">&lt;</button>
+            <div class="movie-slider" id="movie-slider-trending">
+                <!-- Trending movies - simulate with sample data -->
+                <div class="movie-card" onclick="openPopup('The Last of Us', 'Action/Drama', 'A post-apocalyptic journey of survival and relationships.')">
+                    <img src="https://m.media-amazon.com/images/I/91Tg0xhBrrL._AC_SY679_.jpg" alt="The Last of Us">
+                    <h3>The Last of Us</h3>
+                </div>
+                <div class="movie-card" onclick="openPopup('Stranger Things', 'Drama/Fantasy', 'The kids in Hawkins battle strange supernatural forces.')">
+                    <img src="https://loyolamaroon.com/wp-content/uploads/2022/08/ST-Poster-Season-4-720x900.jpeg" alt="Stranger Things">
+                    <h3>Stranger Things</h3>
+                </div>
+                <div class="movie-card" onclick="openPopup('The Mandalorian', 'Action/Sci-Fi', 'A lone bounty hunter traverses the galaxy.')">
+                    <img src="https://upload.wikimedia.org/wikipedia/en/e/e6/The_Mandalorian_Logo.jpg" alt="The Mandalorian">
+                    <h3>The Mandalorian</h3>
+                </div>
+                <div class="movie-card" onclick="openPopup('Ted Lasso', 'Comedy/Drama', 'An American football coach leads a British soccer team.')">
+                    <img src="https://upload.wikimedia.org/wikipedia/en/9/91/Ted_Lasso_season_2_poster.jpg" alt="Ted Lasso">
+                    <h3>Ted Lasso</h3>
+                </div>
+                <div class="movie-card" onclick="openPopup('Wednesday', 'Fantasy/Comedy', 'A dark comedy following Wednesday Addams.')">
+                    <img src="https://upload.wikimedia.org/wikipedia/en/7/73/Wednesday_2022_poster.jpg" alt="Wednesday">
+                    <h3>Wednesday</h3>
+                </div>
+            </div>
+            <button class="slider-arrow right" id="right-arrow-trending">&gt;</button>
+        </div>
+    </div>
+
+    <!-- Top Rated Movies Section -->
+    <div class="movie-section">
+        <h2 class="section-header">Top Rated Movies</h2>
+        <div class="movie-slider-container">
+            <button class="slider-arrow left" id="left-arrow-top-rated">&lt;</button>
+            <div class="movie-slider" id="movie-slider-top-rated">
+                <!-- Top-rated movies - simulated with popular choices -->
+                <div class="movie-card" onclick="openPopup('The Shawshank Redemption', 'Drama', 'A powerful story of hope and friendship.')">
+                    <img src="https://m.media-amazon.com/images/I/51NiGlapXlL._AC_.jpg" alt="The Shawshank Redemption">
+                    <h3>The Shawshank Redemption</h3>
+                </div>
+                <div class="movie-card" onclick="openPopup('The Dark Knight', 'Action/Crime', 'Batman faces his greatest challenge against the Joker.')">
+                    <img src="https://m.media-amazon.com/images/I/71qNS5qOw7L._AC_SY679_.jpg" alt="The Dark Knight">
+                    <h3>The Dark Knight</h3>
+                </div>
+                <div class="movie-card" onclick="openPopup('Forrest Gump', 'Drama/Romance', 'The life of an extraordinary man who changed history.')">
+                    <img src="https://m.media-amazon.com/images/I/51w8dwdV55L._AC_.jpg" alt="Forrest Gump">
+                    <h3>Forrest Gump</h3>
+                </div>
+                <div class="movie-card" onclick="openPopup('Inception', 'Sci-Fi/Action', 'A mind-bending journey through dreams within dreams.')">
+                    <img src="https://m.media-amazon.com/images/I/91QdshsCgAL._AC_SY679_.jpg" alt="Inception">
+                    <h3>Inception</h3>
+                </div>
+                <div class="movie-card" onclick="openPopup('The Godfather', 'Crime/Drama', 'The story of a mafia family and its patriarch.')">
+                    <img src="https://m.media-amazon.com/images/I/51zOMmTzZyL._AC_.jpg" alt="The Godfather">
+                    <h3>The Godfather</h3>
+                </div>
+            </div>
+            <button class="slider-arrow right" id="right-arrow-top-rated">&gt;</button>
+        </div>
+    </div>
+
+    <!-- Popup -->
+    <div class="popup" id="popup">
+        <div class="popup-content">
+            <button class="close-btn" onclick="closePopup()">&times;</button>
+            <img id="popup-img" src="" alt="Movie Poster">
+            <h2 id="popup-title"></h2>
+            <p id="popup-description"></p>
+            <button class="watch-now">Watch Now</button>
+        </div>
+    </div>
+
+    <script>
+        function openPopup(title, genre, description) {
+            document.getElementById('popup').style.display = 'flex';
+            document.getElementById('popup-title').innerText = title;
+            document.getElementById('popup-description').innerText = genre + ' - ' + description;
+            const imageUrl = title.toLowerCase().replace(/ /g, '_') + '_poster.jpg';
+            document.getElementById('popup-img').src = imageUrl;
+        }
+
+        function closePopup() {
+            document.getElementById('popup').style.display = 'none';
+        }
+
+        function setupSlider(sliderId, leftArrowId, rightArrowId) {
+            const slider = document.getElementById(sliderId);
+            const leftArrow = document.getElementById(leftArrowId);
+            const rightArrow = document.getElementById(rightArrowId);
+
+            let scrollAmount = 0;
+
+            rightArrow.addEventListener('click', () => {
+                scrollAmount += slider.offsetWidth / 2;
+                slider.style.transform = `translateX(-${scrollAmount}px)`;
+            });
+
+            leftArrow.addEventListener('click', () => {
+                scrollAmount -= slider.offsetWidth / 2;
+                if (scrollAmount < 0) scrollAmount = 0;
+                slider.style.transform = `translateX(-${scrollAmount}px)`;
+            });
+        }
+
+        setupSlider('movie-slider-trending', 'left-arrow-trending', 'right-arrow-trending');
+        setupSlider('movie-slider-top-rated', 'left-arrow-top-rated', 'right-arrow-top-rated');
+    </script>
+</body>
+</html>

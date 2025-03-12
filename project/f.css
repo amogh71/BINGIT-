@@ -1,0 +1,214 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Bingit+ Movie Streaming</title>
+    <style>
+        body {
+            margin: 0;
+            font-family: Arial, sans-serif;
+            background-color: #111;
+            color: #fff;
+        }
+
+        /* Header */
+        .header {
+            background-color: #222;
+            padding: 10px 20px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+
+        .header h1 {
+            color: #e50914;
+            font-size: 24px;
+            margin: 0;
+        }
+
+        .search {
+            display: flex;
+            align-items: center;
+        }
+
+        .search input {
+            background-color: #333;
+            border: none;
+            padding: 8px;
+            color: #fff;
+            border-radius: 4px;
+        }
+
+        .search input:focus {
+            outline: none;
+        }
+
+        /* Horizontal Scroll Section */
+        .movie-section {
+            margin: 20px;
+        }
+
+        .movie-section h2 {
+            font-size: 20px;
+            margin-bottom: 10px;
+        }
+
+        .movie-slider {
+            display: flex;
+            overflow-x: auto;
+            gap: 15px;
+            padding-bottom: 10px;
+        }
+
+        .movie-slider::-webkit-scrollbar {
+            display: none;
+        }
+
+        .movie-card {
+            min-width: 150px;
+            background-color: #222;
+            border-radius: 8px;
+            overflow: hidden;
+            cursor: pointer;
+            text-align: center;
+        }
+
+        .movie-card img {
+            width: 40%;
+            height: auto;
+        }
+
+        .movie-card h3 {
+            font-size: 14px;
+            margin: 5px 0;
+        }
+
+        /* Popup */
+        .popup {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.8);
+            align-items: center;
+            justify-content: center;
+        }
+
+        .popup-content {
+            background-color: #222;
+            border-radius: 8px;
+            padding: 20px;
+            width: 80%;
+            max-width: 500px;
+            text-align: center;
+        }
+
+        .popup img {
+            width: 100%;
+            border-radius: 8px;
+        }
+
+        .popup h2 {
+            margin: 15px 0;
+        }
+
+        .popup p {
+            font-size: 14px;
+            margin: 10px 0;
+        }
+
+        .watch-now {
+            background-color: #e50914;
+            color: #fff;
+            border: none;
+            padding: 10px 20px;
+            font-size: 16px;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+
+        .close-btn {
+            position: absolute;
+            top: 10px;
+            right: 10px;
+            background: none;
+            border: none;
+            font-size: 20px;
+            color: #fff;
+            cursor: pointer;
+        }
+    </style>
+</head>
+<body>
+    <div class="header">
+        <h1>Bingit+</h1>
+        <div class="search">
+            <input type="text" placeholder="Search movies or series...">
+        </div>
+    </div>
+
+    <div class="movie-section">
+        <h2>Popular Movies</h2>
+        <div class="movie-slider">
+            <div class="movie-card" onclick="openPopup('Joker', 'Crime/Thriller', 'A man struggles with mental illness leading to chaos.')">
+                <img src="https://wallpapers.com/images/hd/joker-poster-37j6jfl9mk1jmozx.jpg" alt="Joker">
+                <h3>Joker</h3>
+            </div>
+            <div class="movie-card" onclick="openPopup('The Batman', 'Action/Crime', 'The Dark Knight fights crime in Gotham City.')">
+                <img src="https://images-wixmp-ed30a86b8c4ca887773594c2.wixmp.com/f/639f78fd-37c9-47ad-ac8e-31d3ec7ba7e7/df0f764-95591760-c9d6-4177-9bd1-f831849476e6.jpg?token=eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJ1cm46YXBwOjdlMGQxODg5ODIyNjQzNzNhNWYwZDQxNWVhMGQyNmUwIiwiaXNzIjoidXJuOmFwcDo3ZTBkMTg4OTgyMjY0MzczYTVmMGQ0MTVlYTBkMjZlMCIsIm9iaiI6W1t7InBhdGgiOiJcL2ZcLzYzOWY3OGZkLTM3YzktNDdhZC1hYzhlLTMxZDNlYzdiYTdlN1wvZGYwZjc2NC05NTU5MTc2MC1jOWQ2LTQxNzctOWJkMS1mODMxODQ5NDc2ZTYuanBnIn1dXSwiYXVkIjpbInVybjpzZXJ2aWNlOmZpbGUuZG93bmxvYWQiXX0.qHtzxIQnkZF0LXdwPNJd2KnpIvtFYZ7yy5YOWNB5wV0" alt="The Batman">
+                <h3>The Batman</h3>
+            </div>
+            <div class="movie-card" onclick="openPopup('Clockwork Orange', 'Crime/Thriller', 'A dystopian tale of a delinquent.')">
+                <img src="https://artquid.twic.pics/art/8/94/548430.1702163317.1.o592846583.jpg" alt="Clockwork Orange">
+                <h3>Clockwork Orange</h3>
+            </div>
+        </div>
+    </div>
+
+    <div class="movie-section">
+        <h2>Popular Series</h2>
+        <div class="movie-slider">
+            <div class="movie-card" onclick="openPopup('Breaking Bad', 'Action/Crime', 'A teacher turns to crime to secure his family.')">
+                <img src="https://render.fineartamerica.com/images/rendered/default/poster/6/8/break/images/artworkimages/medium/3/breaking-bad-minimalist-illustration-remake-posters.jpg" alt="Breaking Bad">
+                <h3>Breaking Bad</h3>
+            </div>
+            <div class="movie-card" onclick="openPopup('Game of Thrones', 'Drama', 'A tale of power, betrayal, and fantasy.')">
+                <img src="https://m.media-amazon.com/images/I/51A7EGmxK-L.jpg" alt="Game of Thrones">
+                <h3>Game of Thrones</h3>
+            </div>
+            <div class="movie-card" onclick="openPopup('Stranger Things', 'Drama/Fantasy', 'Kids face supernatural threats in a small town.')">
+                <img src="https://loyolamaroon.com/wp-content/uploads/2022/08/ST-Poster-Season-4-720x900.jpeg" alt="Stranger Things">
+                <h3>Stranger Things</h3>
+            </div>
+        </div>
+    </div>
+
+    <!-- Popup -->
+    <div class="popup" id="popup">
+        <div class="popup-content">
+            <button class="close-btn" onclick="closePopup()">&times;</button>
+            <img id="popup-img" src="" alt="Movie Poster">
+            <h2 id="popup-title"></h2>
+            <p id="popup-description"></p>
+            <button class="watch-now">Watch Now</button>
+        </div>
+    </div>
+
+    <script>
+        function openPopup(title, genre, description) {
+            document.getElementById('popup').style.display = 'flex';
+            document.getElementById('popup-title').innerText = title;
+            document.getElementById('popup-description').innerText = genre + ' - ' + description;
+            document.getElementById('popup-img').src = title.toLowerCase().replace(/ /g, '') + '.jpg';
+        }
+
+        function closePopup() {
+            document.getElementById('popup').style.display = 'none';
+        }
+    </script>
+</body>
+</html>
+
